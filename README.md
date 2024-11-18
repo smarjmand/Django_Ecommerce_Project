@@ -4,6 +4,7 @@ a website to sell goods
 ## Project Images 
 
 <h4> Index Page :</h4>
+<img width="923" alt="index" src="https://github.com/user-attachments/assets/32a3695f-7246-47f9-a4ea-3324517cc58e">
 
 
 <h4> Login Page :</h4>
