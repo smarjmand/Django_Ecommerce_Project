@@ -7,12 +7,12 @@ a website to sell goods
 <img width="923" alt="index" src="https://github.com/user-attachments/assets/32a3695f-7246-47f9-a4ea-3324517cc58e">
 
 
-<h4> Login Page :</h4>
-<img width="911" alt="login" src="https://github.com/user-attachments/assets/7695a094-077e-48ef-a927-c03ecb8ee761">
-
-
 <h4> Product Detail Page :</h4>
 <img width="919" alt="product" src="https://github.com/user-attachments/assets/11879e6e-0b7c-40c1-9443-84f94af1f43c">
+
+
+<h4> Login Page :</h4>
+<img width="911" alt="login" src="https://github.com/user-attachments/assets/7695a094-077e-48ef-a927-c03ecb8ee761">
 
 
 <h4> Register Page :</h4>
