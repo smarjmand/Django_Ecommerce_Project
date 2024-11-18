@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load poll_extras %}
+{% load mathfilters %}
+
+{% block title %}
+    سفارش چی | خرید موفق
+{% endblock %}
+
+{% block content %}
+    <br><br>
+    <div class="container py-5">
+        <div class="table-responsive bg-light rounded shadow-sm">
+            <div class="container-fluid py-4">
+                <div class="container py-3 text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            {% if payed %}
+                                <i class="fa fa-check-circle display-1 text-success"></i>
+                                <h6 class="mb-4">خرید شما با موفقیت ثبت گردید</h6>
+                            {% else %}
+                                <i class="fa fa-xmark-circle display-1 text-danger"></i>
+                                <h6 class="mb-4">خرید نا موفق</h6>
+                                <p>{{ msg }}</p>
+                                <hr>
+                            {% endif %}
+                            <h6 class="mb-4">شماره سفارش : {{ order.track_number }}</h6>
+                            <h6 class="mb-4">مبلغ فاکتور : {{ order.payment_amount | fix_currency }}</h6>
+                        </div>
+                    </div>
+                    <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                        <a href="{% url 'store_index_page' %}" class="btn border-secondary py-3 px-4 text-uppercase w-50 text-primary">صفحه اصلی</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% autoescape off %}
+
+    از طریق لینک زیر می توانید حساب کاربری خود را فعال کنید
+
+    http://{{ domain }}{% url 'email_verification' uidb64=uid token=token %}
+
+{% endautoescape %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    سفارش چی | آدرس
+{% endblock %}
+
+{% block content %}
+    <br><br>
+
+    <div class="container py-5">
+        <div class="table-responsive bg-light rounded shadow-sm">
+            <div class="container-fluid py-2">
+                <div class="container py-2 text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <h3 class="mb-3" dir="rtl"> {{ user.first_name }}، خوش آمدی!</h3>
+                            <p class="mb-3">برای خرید آدرس خود را ثبت کنید</p>
+                            <a class="btn border-secondary rounded-pill py-3 px-5" href="{% url 'dashboard_page' %}">داشبورد</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid ">
+        <div class="container ">
+            <div class="bg-light rounded shadow-sm">
+                <form id="address-update-form" autocomplete="off" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" id="action" value="none">
+                    <div class="p-4" style="direction: rtl;">
+                        <h2 class="text-center bg-secondary shadow-sm " style=" border-radius: 10px; direction: rtl;">آدرس</h2>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password">نام و نام خانوادگی<sup>*</sup></label>
+                                    {{ form.full_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password_confirm">ایمیل<sup>*</sup></label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password">استان<sup>*</sup></label>
+                                    {{ form.state }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password_confirm">شهر<sup>*</sup></label>
+                                    {{ form.city }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password">آدرس<sup>*</sup></label>
+                                    {{ form.address }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password_confirm">کدپستی<sup>*</sup></label>
+                                    {{ form.zip_code }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">ویرایش</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" onclick="confirmDelete()" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">حذف آدرس</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <script>
+        function confirmDelete() {
+            Swal.fire({
+                text: "آیا از حذف حساب کاربری خود مطمین هستید؟",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#FFB524FF",
+                cancelButtonColor: "#81C408FF",
+                confirmButtonText: "حذف کن!",
+                cancelButtonText: "لغو"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Set action to 'delete' and submit the form
+                    document.getElementById("action").value = "delete";
+                    document.getElementById("address-update-form").submit();
+                }
+            });
+        }
+    </script>
+{% endblock %}

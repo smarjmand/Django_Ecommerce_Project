@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load poll_extras %}
+{% block title %}
+    سفارش چی | فروشگاه
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid fruite py-5">
+        <div class="container py-5">
+            <h4> محصولات</h4>
+            <hr>
+            <div class="tab-class text-center">
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="row g-4">
+
+                                    {% for product in page_obj %}
+                                        <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
+                                            <div class="rounded position-relative fruite-item">
+                                                <div class="fruite-img">
+                                                    <a href="{% url 'product_detail_page' slug=product.slug %}">
+                                                        <img src="{{ product.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ product.title }}" style="height: 200px; object-fit: cover;">
+                                                    </a>
+                                                </div>
+                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom d-flex flex-column">
+                                                    <h6>
+                                                        <a href="{% url 'product_detail_page' slug=product.slug %}">{{ product.title }}</a>
+                                                    </h6>
+                                                    <p>{{ product.description|truncatechars:50 }}</p>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="text-dark fs-5 fw-bold mb-0">{{ product.price | fix_currency }}</p>
+                                                        <a href="{% url 'product_detail_page' product.slug %}" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> خرید
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                    <div class="col-12">
+                                        <div class="pagination d-flex justify-content-center mt-0 pt-0">
+                                            {% if page_obj.has_previous %}
+                                                <a href="?page=1" class="rounded">اولین</a>
+                                                <a href="?page={{ page_obj.previous_page_number }}" class="rounded">&laquo;</a>
+                                            {% endif %}
+
+                                            {% for num in page_obj.paginator.page_range %}
+
+                                                {% if page_obj.number == num %}
+                                                    <a href="?page={{ num }}" class="active rounded">{{ num }}</a>
+                                                {% else %}
+                                                    <a href="?page={{ num }}" class="rounded">{{ num }}</a>
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                            {% if page_obj.has_next %}
+                                                <a href="?page={{ page_obj.next_page_number }}" class="rounded">&raquo;</a>
+                                                <a href="?page={{ page_obj.paginator.num_pages }}" class="rounded">آخرین</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

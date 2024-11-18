@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+    سفارش چی | ایمیل فعال سازی
+{% endblock %}
+
+{% block content %}
+    <br><br>
+    <div class="container py-5">
+        <div class="table-responsive bg-light rounded shadow-sm">
+            <div class="container-fluid py-2">
+                <div class="container py-5 text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <i class="bi bi-unlock display-1 text-warning"></i>
+                            <h1 class="mb-4">موفق</h1>
+                            <p class="mb-4">حساب کاربری شما با موفقیت فعال گردید </p>
+                            <a class="btn border-secondary rounded-pill py-3 px-5" href="{% url 'login_page' %}">ورود به حساب کاربری</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

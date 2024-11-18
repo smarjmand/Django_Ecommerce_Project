@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load poll_extras %}
+
+{% block title %}
+    سفارش چی | سبد خرید
+{% endblock %}
+
+{% block content %}
+    <br><br>
+    <div class="container-fluid py-5">
+        {% if cart %}
+            <div class=" table-responsive bg-light rounded container py-4">
+                <h2 class="text-center bg-secondary shadow-sm " style=" border-radius: 10px; direction: rtl;">سبد خرید</h2>
+                <br>
+                <div class=" bg-white rounded shadow-sm">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="text-align: right;">محصولات</th>
+                            <th scope="col" style="text-align: right;">عنوان</th>
+                            <th scope="col" style="text-align: right;">دسته بندی</th>
+                            <th scope="col" style="text-align: right;">قیمت</th>
+                            <th scope="col" style="text-align: right;">تعداد</th>
+                            <th scope="col" style="text-align: right;">مجموع</th>
+                            <th scope="col" style="text-align: right;">ویرایش</th>
+                            <th scope="col" style="text-align: right;">حذف</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in cart %}
+                            {% with item.product as product %}
+                                <tr id="row-{{ product.id }}">
+                                    <th scope="row">
+                                        <div class="d-flex align-items-center">
+                                            <a href="{% url 'product_detail_page' slug=product.slug %}">
+                                                <img src="{{ product.image.url }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                            </a>
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <a href="{% url 'product_detail_page' slug=product.slug %}">
+                                            <p class="mb-0 mt-4" style="text-align: right;">{{ product.title }}</p>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 mt-4" style="text-align: right;">
+                                            <a href="{% url 'products_by_category_page' slug=product.category.slug %}">{{ product.category }}</a>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 mt-4" style="text-align: right;">{{ item.price | fix_currency }}</p>
+                                    </td>
+                                    <td>
+                                        <div class="input-group quantity mt-4" style="width: 100px;">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" class="form-control form-control-sm text-center border-0" min="1" value="{{ item.qty }}">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0 mt-4" style="text-align: right;">{{ item.total_price | fix_currency }}</p>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="update-button" data-index="{{ product.id }}" class="btn btn-md rounded-circle bg-body border mt-4">
+                                            <i class="fa fa-check text-success"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="delete-button" data-index="{{ product.id }}" class="btn btn-md rounded-circle bg-body border mt-4">
+                                            <i class="fa fa-times text-danger"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endwith %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row g-4 justify-content-right">
+                    <div class="col-lg-4 col-md-5 col-sm-6">
+                        <div class="bg-white rounded shadow-sm" style="position: sticky; top: 20px;">
+                            <div class="p-4" style="direction: rtl;">
+                                <h3 class="mb-3 text-center">مجموع خرید</h3>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h5 class="mb-0 me-4" style="text-align: right;">پرداختی :</h5>
+                                    <p id="cart-total-price" class="mb-0" style="text-align: right;">{{ cart.get_total_cart_price | fix_currency }}</p>
+                                </div>
+                                <hr>
+                                <a href="{% url 'checkout_page' %}" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-2 ms-4 ">ادامه خرید</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="container py-3">
+                <div class="table-responsive bg-light rounded shadow-sm">
+                    <div class="container-fluid py-2">
+                        <div class="container py-5 text-center">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6">
+                                    <i class="bi bi-cart-x display-1 text-secondary"></i>
+                                    <h1 class="mb-4">سبد خرید شما خالی است</h1>
+                                    <p class="mb-4">برای مشاهده محصولات و خرید به صفحه مصولات مراجعه کنید</p>
+                                    <a class="btn border-secondary rounded-pill py-3 px-5" href="{% url 'store_index_page' %}">محصولات</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+
+        {# delete button #}
+        $(document).on('click', '#delete-button', function (e) {
+            e.preventDefault();
+            let productId = $(this).data('index');
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'card_delete_view' %}',
+                data: {
+                    product_id: productId,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    console.log('item deleted successfully');
+                    location.reload()
+                    $('#cart-qty').text(json.qty);
+                    $('#cart-total-price').text(json.cart_total_price);  // Update cart total price
+                    $('#row-' + productId).remove();  // Remove the row from the table
+                },
+                error: function (xhr, errmsg, err) {
+                    // Handle error (e.g., show an alert)
+                    alert("Error: " + errmsg);
+                }
+            });
+        });
+
+        {# update button #}
+        $(document).on('click', '#update-button', function (e) {
+            e.preventDefault();
+            let productId = $(this).data('index');
+            let productQuantity = $('#row-' + productId).find('input').val();  // Get the quantity value from the input field
+            console.log(productQuantity)
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cart_update_view' %}',
+                data: {
+                    product_id: productId,
+                    product_quantity: productQuantity,  // Pass the updated quantity
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    console.log('Item updated successfully');
+                    location.reload()
+                    $('#cart-qty').text(json.qty);  // Update cart quantity
+                    $('#cart-total-price').text(json.cart_total_price);  // Update cart total price
+                },
+                error: function (xhr, errmsg, err) {
+                    // Handle error (e.g., show an alert)
+                    alert("Error: " + errmsg);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

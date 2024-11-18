@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    سفارش چی | ورود
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+
+            <div class="container-fluid py-4">
+
+                <div class="bg-light rounded shadow-sm">
+                    <div class="container-fluid py-4">
+                        <h2 class="text-center bg-secondary shadow-sm" style="border-radius: 10px; direction: rtl;">ورود به حساب کاربری</h2>
+
+                        <form autocomplete="off" method="POST">
+                            {% csrf_token %}
+                            <div class="p-4" style="direction: rtl;">
+
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-item w-100">
+                                            <label class="form-label my-3" for="password">نام کاربری<sup>*</sup></label>
+                                            {{ form.username }}
+                                            {{ form.username.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-6">
+                                        <div class="form-item w-100">
+                                            <label class="form-label my-3" for="password_confirm">کلمه عبور<sup>*</sup></label>
+                                            {{ form.password }}
+                                            {{ form.password.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p>{{ form.non_field_errors }}</p>
+
+
+                                <div class="form-check my-3">
+                                    <a href="{% url 'reset_password' %}">فراموشی کلمه عبور</a>
+                                </div>
+
+                                <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                                    <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">ورود</button>
+                                </div>
+
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+{% endblock %}

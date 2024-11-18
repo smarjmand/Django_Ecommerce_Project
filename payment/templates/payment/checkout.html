@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    سفارش چی | آدرس
+{% endblock %}
+
+{% block content %}
+    <br><br><br><br>
+    <div class="container-fluid ">
+        <div class="container ">
+            <div class="bg-light rounded shadow-sm">
+                <form autocomplete="off" method="POST" action="{% url 'complete_order_view' %}">
+                    {% csrf_token %}
+                    <div class="p-4" style="direction: rtl;">
+                        <h2 class="text-center bg-secondary shadow-sm " style=" border-radius: 10px; direction: rtl;">آدرس</h2>
+                        <br>
+                        <p class="alert alert-dark text-center py-2 px-4 rounded shadow-sm mx-auto" style="max-width: 380px;">** برای ادامه ی خرید آدرس خود را وارد کنید **</p>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password">نام و نام خانوادگی<sup>*</sup></label>
+                                    {{ form.full_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password_confirm">ایمیل<sup>*</sup></label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password">استان<sup>*</sup></label>
+                                    {{ form.state }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password_confirm">شهر<sup>*</sup></label>
+                                    {{ form.city }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password">آدرس<sup>*</sup></label>
+                                    {{ form.address }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password_confirm">کدپستی<sup>*</sup></label>
+                                    {{ form.zip_code }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                            <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">ثبت </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+
+    {#    <script>#}
+    {#        $('#address-update-form').on('submit', function (e) {#}
+    {#            e.preventDefault();  // Prevent the default form submission#}
+    {#            $.ajax({#}
+    {#                type: 'POST',#}
+    {#                url: '{% url 'complete_order_view' %}',#}
+    {#                data: {#}
+    {#                    full_name: $('#id_full_name').val(),#}
+    {#                    email: $('#id_email').val(),#}
+    {#                    state: $('#id_state').val(),#}
+    {#                    city: $('#id_city').val(),#}
+    {#                    address: $('#id_address').val(),#}
+    {#                    zip_code: $('#id_zip_code').val(),#}
+    {#                    csrfmiddlewaretoken: "{{ csrf_token }}",  // Include CSRF token for security#}
+    {#                    action: 'post'#}
+    {#                },#}
+    {#                success: function (json) {#}
+    {#                    console.log(json);#}
+    {#                    window.location.replace("http://127.0.0.1:8000/pay/success/"+json.id);#}
+    {#                },#}
+    {#                error: function (xhr, errmsg, err) {#}
+    {#                    window.location.replace("{% url 'payment_failed_view' %}");#}
+    {#                }#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    سفارش چی | ثبت نام
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="bg-light rounded shadow-sm">
+
+                <form autocomplete="off" method="POST">
+
+                    <div class="container-fluid py-4">
+                        <h2 class="text-center bg-secondary shadow-sm" style="border-radius: 10px; direction: rtl;">ثبت نام</h2>
+                    </div>
+
+                    {% csrf_token %}
+                    <div class="p-4" style="direction: rtl;">
+
+                        <div class="form-item">
+                            <label class="form-label my-3">نام کاربری<sup>*</sup></label>
+                            {{ form.username }}
+                            {{ form.username.errors }}
+                        </div>
+
+                        <div class="form-item">
+                            <label class="form-label my-3" for="email">ایمیل<sup>*</sup></label>
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password">کلمه عبور<sup>*</sup></label>
+                                    {{ form.password1 }}
+                                    {{ form.password1.errors }}
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="form-item w-100">
+                                    <label class="form-label my-3" for="password_confirm">تکرار کلمه عبور<sup>*</sup></label>
+                                    {{ form.password2 }}
+                                    {{ form.password2.errors }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check my-3">
+                            <a href="{% url 'login_page' %}">حساب کاربری دارید؟</a>
+                        </div>
+
+                        <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                            <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">ثبت نام</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load poll_extras %}
+{% load jalali_tags %}
+
+{% block title %}
+    سفارش چی | خرید موفف
+{% endblock %}
+
+{% block content %}
+    <br><br>
+    <div class="container py-5">
+        <div class="table-responsive bg-light rounded shadow-sm">
+            <div class="container-fluid py-4">
+                <h2 class="text-center bg-secondary shadow-sm" style="border-radius: 10px; direction: rtl;">جزییات سفارش</h2>
+                <div class="container py-4 text-center">
+                    <div class="row justify-content-center">
+                        <div class=" bg-body rounded shadow-sm">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col" style="text-align: right;">شماره سفارش</th>
+                                    <th scope="col" style="text-align: right;">تاریخ</th>
+                                    <th scope="col" style="text-align: right;">ساعت</th>
+                                    <th scope="col" style="text-align: right;">مجموع</th>
+                                    <th scope="col" style="text-align: right;">موفق</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td style="vertical-align: middle;">
+                                        <a href="">
+                                            <p class="mb-0" style="text-align: right;">{{ order.track_number }}</p>
+                                        </a>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <p class="mb-0" style="text-align: right;">{{ order.date.date | to_jalali }}</p>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <p class="mb-0" style="text-align: right;">{{ order.date.time }}</p>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <p class="mb-0" style="text-align: right;">{{ order.payment_amount | fix_currency }}</p>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <p class="mb-0" style="text-align: right;">
+                                            {% if order.is_payed == True %}
+                                                <i class="fa fa-check text-success"></i>
+                                            {% else %}
+                                                <i class="fa fa-times text-danger"></i>
+                                            {% endif %}
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="container py-0 text-center">
+                    <div class="row justify-content-center">
+                        <div class=" bg-body rounded shadow-sm">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col" style="text-align: right;">محصولات</th>
+                                    <th scope="col" style="text-align: right;">عنوان</th>
+                                    <th scope="col" style="text-align: right;">قیمت</th>
+                                    <th scope="col" style="text-align: right;">تعداد</th>
+                                    <th scope="col" style="text-align: right;">مجموع</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in order.orderitem_set.all %}
+                                    <tr id="row-{{ item.id }}">
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ item.product.image.url }}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <p class="mb-0 mt-4" style="text-align: right;">{{ item.product.title }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 mt-4" style="text-align: right;">
+                                                {{ item.product.price | fix_currency }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 mt-4" style="text-align: right;">{{ item.quantity }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0 mt-4" style="text-align: right;">{{ item.price | fix_currency }}</p>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
